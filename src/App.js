@@ -1,8 +1,24 @@
+import { Container } from "react-bootstrap";
 import "./App.css";
-import react from "/react";
+import SearchForm from "./Components/SearchForm";
+import CustomCard from "./Components/CustomCard";
+import MovieList from "./Components/MovieList";
 
-function App() {
-  return <div></div>;
-}
+const App = () => {
+  return (
+    <div className="wrapper">
+      <Container>
+        <SearchForm />
+        <div className="mt-4 d-flex justify-content-center">
+          {" "}
+          <CustomCard />
+        </div>
+
+        <hr />
+        <MovieList />
+      </Container>
+    </div>
+  );
+};
 
 export default App;
