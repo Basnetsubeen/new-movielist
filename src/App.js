@@ -21,19 +21,29 @@ const App = () => {
     setMovieList([...movieList, movie]);
     setMovie({});
   };
+  const deleteMovies = (imdbID) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      const tempArg = movieList.filter((item) => item.imdbID !== imdbID);
+      setMovieList(tempArg);
+    }
+  };
   return (
     <div className="wrapper">
       <Container>
         <SearchForm handleOnSubmit={handleOnSubmit} />
         <div className="mt-4 d-flex justify-content-center">
           {movie.imdbID && (
-            <CustomCard movie={movie} movieSelect={movieSelect} />
+            <CustomCard
+              movie={movie}
+              movieSelect={movieSelect}
+              isSearch={true}
+            />
           )}
           {showError && <Alert variant="danger">{showError}</Alert>}
         </div>
 
         <hr />
-        <MovieList movieList={movieList} />
+        <MovieList movieList={movieList} deleteMovies={deleteMovies} />
       </Container>
     </div>
   );

@@ -3,12 +3,14 @@ import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import CustomCard from "./CustomCard";
+import CustomList from "./CustomList";
 
-const MovieList = ({ movieList }) => {
+const MovieList = ({ movieList, deleteMovies }) => {
   useEffect(() => {
     setDisplayMovie(movieList);
   }, [movieList]);
   const [displayMovie, setDisplayMovie] = useState([]);
+  const [view, setView] = useState("grid");
   const filterMovies = (mood) => {
     if (mood === "all") {
       return setDisplayMovie(movieList);
@@ -33,16 +35,27 @@ const MovieList = ({ movieList }) => {
           </ButtonGroup>
 
           <ButtonGroup aria-label="Basic example">
-            <Button variant="primary">Grid</Button>
-            <Button variant="secondary">List</Button>
+            <Button variant="primary" onClick={() => setView("grid")}>
+              Grid
+            </Button>
+            <Button variant="secondary" onClick={() => setView("list")}>
+              List
+            </Button>
           </ButtonGroup>
         </Col>
       </Row>
+      <div className="mt-5 fw-bold">
+        No of Movies Found : {displayMovie.length}
+      </div>
       <Row className="mt-5">
         <Col className="d-flex justify-content-between flex-wrap">
-          {displayMovie.map((item, i) => (
-            <CustomCard movie={item} key={i} />
-          ))}
+          {displayMovie.map((item, i) =>
+            view === "grid" ? (
+              <CustomCard movie={item} key={i} deleteMovies={deleteMovies} />
+            ) : (
+              <CustomList movie={item} key={i} deleteMovies={deleteMovies} />
+            )
+          )}
         </Col>
       </Row>
     </div>
